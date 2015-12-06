@@ -3,7 +3,7 @@
  * Plugin Name: Artiskool WP SU Test
  * Plugin URI: http://wp.artiskool.com/su-test
  * Description: Artiskool Wordpress Software Update plugin test
- * Version: 1.0.0
+ * Version: 0.1.0
  * Author: Art Layese
  * Author URI: http://artiskool.com
  */
@@ -52,15 +52,15 @@ class Artiskool_Plugin_Su
 	{
 		global $wpdb;
 
-		$table_name = $wpdb->prefix . 'hub_messages';
-		$sql = "CREATE TABLE $table_name(
-			message_id bigint(20) NOT NULL AUTO_INCREMENT,
-			parent_id bigint(20) NOT NULL,
-			post_id bigint(20) NOT NULL,
-			sender bigint(20) NOT NULL,
-			recipient bigint(20) NOT NULL,
-			UNIQUE KEY message_id (message_id)
-			);";
+		$table_name = $wpdb->prefix . 'test';
+		$sql = "CREATE TABLE $table_name("
+			. "		id bigint(20) NOT NULL AUTO_INCREMENT,"
+			. "		parent_id bigint(20) NOT NULL,"
+			. "		post_id bigint(20) NOT NULL,"
+			. "		sender bigint(20) NOT NULL,"
+			. "		recipient bigint(20) NOT NULL,"
+			. "		UNIQUE KEY message_id (message_id)"
+			. "	);";
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
@@ -77,3 +77,7 @@ class Artiskool_Plugin_Su
 }
 
 Artiskool_Plugin_Su::getInstance();
+if (is_admin()) {
+	require_once 'classes/artiskool-updater-github.php';
+	new Artiskool_Updater_GitHub (__FILE__, 'artiskool', 'wp-plugin-su');
+}
