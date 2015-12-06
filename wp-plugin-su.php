@@ -53,13 +53,13 @@ class Artiskool_Plugin_Su
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'test';
-		$sql = "CREATE TABLE $table_name("
+		$sql = "CREATE TABLE IF NOT EXISTS $table_name("
 			. "		id bigint(20) NOT NULL AUTO_INCREMENT,"
 			. "		parent_id bigint(20) NOT NULL,"
 			. "		post_id bigint(20) NOT NULL,"
 			. "		sender bigint(20) NOT NULL,"
 			. "		recipient bigint(20) NOT NULL,"
-			. "		UNIQUE KEY message_id (message_id)"
+			. "		UNIQUE KEY id (id)"
 			. "	);";
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
